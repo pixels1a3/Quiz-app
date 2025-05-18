@@ -4,9 +4,10 @@ const rootDiv = document.getElementById('root');
 
 let time;
 let timeRemaining = 10;
+let quizData;
 
 function startQuiz() {
-	fetchQuizData();
+    fetchQuizData();
 }
 
 function fetchQuizData() {
@@ -26,82 +27,91 @@ function fetchQuizData() {
         });
 }
 
-
 function displayQuestion() {
-		rootDiv.innerHTML = '';
+    rootDiv.innerHTML = '';
 
-		const item = quizData[currentQuestionIndex];
+    const item = quizData[currentQuestionIndex];
 
-		const questionElement = document.createElement('h3');
-		questionElement.textContent = item.question;
-		
-		const optionsList = document.createElement('ul');
-		
-		item.options.forEach((option, index) => {
-			const optionItem = document.createElement('li');
-            optionItem.textContent = option;
-            optionItem.classList.add('option');
+    const questionElement = document.createElement('h3');
+    questionElement.textContent = item.question;
+    
+    const optionsList = document.createElement('ul');
+    
+    item.options.forEach((option, index) => {
+        const optionItem = document.createElement('li');
+        optionItem.textContent = option;
+        optionItem.classList.add('option');
 
-			optionItem.addEventListener('click', () => handleOptionClick(option));
+        optionItem.addEventListener('click', () => handleOptionClick(option, optionsList));
 
-			optionsList.appendChild(optionItem);
-		});
+        optionsList.appendChild(optionItem);
+    });
 
-		rootDiv.appendChild(questionElement);
-		rootDiv.appendChild(optionsList);
+    rootDiv.appendChild(questionElement);
+    rootDiv.appendChild(optionsList);
 
-		const timerElement = document.createElement('p');
-		timerElement.id = 'timer';
-		timerElement.textContent = `Tid kvar: ${timeRemaining} sekunder`;
-		rootDiv.appendChild(timerElement);
+    const timerElement = document.createElement('p');
+    timerElement.id = 'timer';
+    rootDiv.appendChild(timerElement);
 
-		time = setInterval(() => {
-			timeRemaining--;
-			timerElement.textContent = `Tid kvar: ${timeRemaining} sekunder`;
-	
-			if (timeRemaining === 0) {
-				clearInterval(time);
-				handleOptionClick(quizData[currentQuestionIndex].options[0]);
-			}
-		}, 1000);
+    const updateTimer = () => {
+        timerElement.textContent = `Tid kvar: ${timeRemaining} sekunder`;
+        timeRemaining--;
+        if (timeRemaining < 0) {
+            clearInterval(time);
+            handleOptionClick(quizData[currentQuestionIndex].options[0], optionsList);
+        }
+    };
+
+    updateTimer();
+    time = setInterval(updateTimer, 1000);
 }
 
-function handleOptionClick(selectedOption) {
-    console.log('Clearing interval');
+function handleOptionClick(selectedOption, optionsList) {
     clearInterval(time);
 
-    if (timeRemaining === 0) {
-        alert("Tiden är ute!");
-    } else {
-        const correctAnswer = quizData[currentQuestionIndex].answer;
+    const correctAnswer = quizData[currentQuestionIndex].answer;
+    const optionItems = optionsList.querySelectorAll('li');
 
-        if (selectedOption === correctAnswer) {
-            alert("Rätt svar!");
-            points += 1;
+
+    optionItems.forEach(item => {
+        item.style.pointerEvents = 'none';
+    });
+
+
+    optionItems.forEach(item => {
+        if (item.textContent === correctAnswer) {
+            item.classList.add('correct');
         } else {
-            alert("Fel svar. Rätt svar är: " + correctAnswer);
+            item.classList.add('incorrect');
         }
+    });
+
+    if (selectedOption === correctAnswer) {
+        points += 1;
     }
 
     currentQuestionIndex++;
 
-    if (currentQuestionIndex < quizData.length) {
-        timeRemaining = 10;
-        displayQuestion();
-    } else {
-        rootDiv.innerHTML = `
-            <h3>Quizet är över!</h3>
-            <br><h3>Du fick ${points} poäng.</h3>
-            <button id="restart-button">Starta om quiz</button>
-        `;
-		const restartButton = document.getElementById('restart-button');
-        restartButton.addEventListener('click', () => {
-            points = 0;
-            currentQuestionIndex = 0;
+    setTimeout(() => {
+        if (currentQuestionIndex < quizData.length) {
             timeRemaining = 10;
             displayQuestion();
-        });
-	}
+        } else {
+            rootDiv.innerHTML = `
+                <h3>Quizet är över!</h3>
+                <br><h3>Du fick ${points} poäng.</h3>
+                <button id="restart-button">Starta om quiz</button>
+            `;
+            const restartButton = document.getElementById('restart-button');
+            restartButton.addEventListener('click', () => {
+                points = 0;
+                currentQuestionIndex = 0;
+                timeRemaining = 10;
+                startQuiz();
+            });
+        }
+    }, 1000);
 }
 
 startQuiz();
