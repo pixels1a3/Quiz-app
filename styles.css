@@ -1,0 +1,141 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f0f4ff 0%, #fbebff 100%);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#root {
+    background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+    border: 3px solid #20c997;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    max-width: 700px;
+    width: 95%;
+    position: relative;
+}
+
+h3 {
+    color: #d63384;
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #adb5bd;
+    color: black;
+    font-weight: bold;
+    padding: 15px;
+    margin: 12px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 1.2em;
+}
+
+li:hover {
+    background-color: #fd7e14;
+    transform: scale(1.02);
+}
+
+li.correct {
+    background-color: #00b92b;
+    color: black;
+    font-weight: bold;
+}
+
+li.incorrect {
+    background-color: #ff5869;
+    color: black;
+    font-weight: bold;
+}
+
+#timer {
+    text-align: center;
+    font-weight: bold;
+    margin: 15px 0;
+    font-size: 1.3em;
+    color: #0d6efd;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 8px;
+    border-radius: 5px;
+}
+
+button, #restart-button {
+    background-color: #00b67f;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#restart-button {
+    padding: 15px 25px;
+    font-size: 1.6em;
+    border-radius: 8px;
+}
+
+button:hover, #restart-button:hover {
+    background-color: #17a2b8;
+    transform: scale(1.02);
+}
+
+
+#root::before {
+    content: "Allmänt quiz";
+    display: block;
+    text-align: center;
+    font-size: 1.8em;
+    color: #fd7e14;
+    margin-bottom: 25px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 600px) {
+    #root {
+        padding: 25px;
+        max-width: 100%;
+        border: 2px solid #20c997;
+    }
+
+    h3 {
+        font-size: 1.6em;
+    }
+
+    li {
+        font-size: 1em;
+        padding: 12px;
+        margin: 8px 0;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+
+    #timer {
+        font-size: 1.1em;
+        padding: 6px;
+    }
+
+    #root::before {
+        font-size: 1.4em;
+        margin-bottom: 20px;
+    }
+}

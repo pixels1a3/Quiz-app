@@ -1,0 +1,27 @@
+[
+    {
+    "question": "Vilken planet ligger närmast solen?",
+    "options": ["Venus", "Merkurius", "Mars"],
+    "answer": "Merkurius"
+    },
+    {
+    "question": "Vilket är världens största land?",
+    "options": ["Ryssland", "Kina", "USA"],
+    "answer": "Ryssland"
+    },
+    {
+    "question": "I vilket land ligger staden Nuuk?",
+    "options": ["Kanada", "Ryssland", "Grönland"],
+    "answer": "Grönland"
+    },
+    {
+    "question": "Vilket djur är störst?",
+    "options": ["Blåval", "Panda", "Elefant"],
+    "answer": "Blåval"
+    },
+    {
+    "question": "I vilken världsdel ligger Australien?",
+    "options": ["Asien", "Nordamerika", "Oceanien"],
+    "answer": "Oceanien"
+    }
+   ]
